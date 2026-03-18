@@ -4,262 +4,243 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MatiXM Community</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-margin:0;
-font-family:'Poppins',sans-serif;
-color:white;
-background:radial-gradient(circle at top,#1a1a2e,#0f0f1a 70%);
-overflow-x:hidden;
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at top, var(--bg1), var(--bg2) 70%);
+  overflow-x: hidden;
+  transition: 0.5s;
 }
 
-/* background */
-body::before{
-content:"";
-position:fixed;
-width:200%;
-height:200%;
-background:linear-gradient(45deg,#ff00cc,#3333ff,#00ffee,#ff00cc);
-background-size:600% 600%;
-animation:bgmove 15s ease infinite;
-filter:blur(120px);
-opacity:0.25;
-z-index:-1;
+/* MOTYWY */
+:root {
+  --bg1:#1a1a2e;
+  --bg2:#0f0f1a;
+  --main:#ff00cc;
+  --second:#6a5cff;
 }
 
-@keyframes bgmove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
+.theme-blue {
+  --main:#00c6ff;
+  --second:#0072ff;
 }
 
-/* LANGUAGE */
-.lang-box{
-position:fixed;
-top:15px;
-right:20px;
-z-index:10;
+.theme-green {
+  --main:#00ff88;
+  --second:#00c853;
 }
 
-.lang-btn{
-background:rgba(255,255,255,0.1);
-border:none;
-color:white;
-padding:10px 15px;
-border-radius:10px;
-cursor:pointer;
+/* TOP MENU */
+.topbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 25px;
+  z-index: 999;
 }
 
-.lang-menu{
-display:none;
-margin-top:5px;
-background:#111;
-border-radius:10px;
-overflow:hidden;
+.dropdown {
+  position: relative;
 }
 
-.lang-menu button{
-display:block;
-width:100%;
-padding:10px;
-border:none;
-background:none;
-color:white;
-cursor:pointer;
-text-align:left;
+.dropbtn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.lang-menu button:hover{
-background:#333;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: rgba(0,0,0,0.8);
+  border-radius: 10px;
+  margin-top: 5px;
 }
 
-/* CONTENT */
-.container{
-max-width:1100px;
-margin:auto;
-padding:60px 20px;
-text-align:center;
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
 }
 
-h1{font-size:56px;margin-bottom:10px}
-
-.tagline{margin-bottom:40px;opacity:0.9}
-
-.btn{
-padding:18px 34px;
-border-radius:14px;
-text-decoration:none;
-font-weight:600;
-background:linear-gradient(45deg,#ff00cc,#6a5cff);
-color:white;
-display:inline-block;
-margin:10px;
-position:relative;
-overflow:hidden;
-transition:0.2s;
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
-.btn:hover{
-transform:scale(1.08);
+/* RESZTA */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 100px 20px 60px;
+  text-align: center;
 }
 
-/* CLICK EFFECT */
-.btn:active{
-transform:scale(0.95);
+h1 {
+  font-size: 56px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, var(--main), var(--second));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.btn::after{
-content:"";
-position:absolute;
-width:0;
-height:0;
-background:rgba(255,255,255,0.5);
-border-radius:50%;
-transform:translate(-50%,-50%);
-pointer-events:none;
+.tagline { margin-bottom: 50px; }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 60px;
 }
 
-.btn:active::after{
-width:200px;
-height:200px;
-transition:0.4s;
+.btn {
+  padding: 18px 34px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 600;
+  background: linear-gradient(45deg,var(--main),var(--second));
+  color: white;
+  transition: 0.3s;
 }
 
-.card{
-margin-top:40px;
-padding:25px;
-background:rgba(255,255,255,0.05);
-border-radius:15px;
+.btn:hover { transform: scale(1.1); }
+
+.card {
+  margin-top: 60px;
+  padding: 35px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
 }
 
-footer{
-margin-top:50px;
-opacity:0.7;
+.youtube iframe {
+  width: 100%;
+  max-width: 800px;
+  height: 450px;
+  border-radius: 16px;
+}
+
+footer {
+  margin-top: 60px;
+  opacity: 0.7;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LANGUAGE -->
-<div class="lang-box">
-<button class="lang-btn" onclick="toggleLang()">🌍 Language</button>
-<div class="lang-menu" id="langMenu">
-<button onclick="setLang('pl')">🇵🇱 Polski</button>
-<button onclick="setLang('en')">🇬🇧 English</button>
-<button onclick="setLang('de')">🇩🇪 Deutsch</button>
-<button onclick="setLang('es')">🇪🇸 Español</button>
-</div>
+<!-- GÓRNY PANEL -->
+<div class="topbar">
+
+  <!-- JĘZYK -->
+  <div class="dropdown">
+    <button class="dropbtn">🌐 Język</button>
+    <div class="dropdown-content">
+      <button onclick="setLang('pl')">🇵🇱 Polski</button>
+      <button onclick="setLang('en')">🇬🇧 English</button>
+    </div>
+  </div>
+
+  <!-- KOLOR -->
+  <div class="dropdown">
+    <button class="dropbtn">🎨 Kolor</button>
+    <div class="dropdown-content">
+      <button onclick="setTheme('')">💜 Domyślny</button>
+      <button onclick="setTheme('theme-blue')">💙 Niebieski</button>
+      <button onclick="setTheme('theme-green')">💚 Zielony</button>
+    </div>
+  </div>
+
 </div>
 
 <div class="container">
 
-<h1 id="title"></h1>
-<p class="tagline" id="tagline"></p>
+<h1 id="title">🔥 Społeczność MatiXM 🔥</h1>
+<p class="tagline" id="tagline">YouTube • Discord • Gaming • Społeczność</p>
 
-<div>
-<a class="btn" id="discordBtn" href="https://discord.gg/e2ynfWRC" target="_blank"></a>
-<a class="btn" id="ytBtn" href="https://www.youtube.com/@MatiXM-123" target="_blank"></a>
+<div class="buttons">
+  <a class="btn" id="discordBtn" href="https://discord.gg/e2ynfWRC" target="_blank">💬 Dołącz do Discorda</a>
+  <a class="btn" id="ytBtn" href="https://www.youtube.com/@MatiXM-123" target="_blank">📺 Kanał YouTube</a>
 </div>
 
 <div class="card">
-<h2 id="latest"></h2>
-<p id="latestDesc"></p>
+  <h2 id="latest">Najnowszy film</h2>
+  <p id="desc">Zobacz mój kanał i dołącz do społeczności!</p>
+</div>
+
+<div class="youtube">
+  <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=MatiXM-123"></iframe>
 </div>
 
 <div class="card">
-<h2 id="collab"></h2>
-<p id="collabDesc"></p>
+  <h2 id="coop">Współprace 🤝</h2>
+  <p id="coopDesc">Chcesz współpracę? Twój serwer pojawi się na Discordzie.</p>
 </div>
 
-<footer id="footer"></footer>
+<footer id="footer">
+© 2026 MatiXM • Strona społeczności
+</footer>
 
 </div>
 
 <script>
-const t = {
-pl:{
-title:"🔥 Społeczność MatiXM 🔥",
-tagline:"YouTube • Discord • Gaming • Społeczność",
-discord:"💬 Dołącz do Discorda",
-yt:"📺 Kanał YouTube",
-latest:"Najnowszy film",
-latestDesc:"Zobacz mój kanał i dołącz do społeczności!",
-collab:"Współprace 🤝",
-collabDesc:"Chcesz współpracę? Dołącz!",
-footer:"© 2026 MatiXM"
-},
-en:{
-title:"🔥 MatiXM Community 🔥",
-tagline:"YouTube • Discord • Gaming • Community",
-discord:"💬 Join Discord",
-yt:"📺 YouTube Channel",
-latest:"Latest video",
-latestDesc:"Check my channel!",
-collab:"Collaborations 🤝",
-collabDesc:"Want to collaborate?",
-footer:"© 2026 MatiXM"
-},
-de:{
-title:"🔥 MatiXM Community 🔥",
-tagline:"YouTube • Discord • Gaming • Community",
-discord:"💬 Discord beitreten",
-yt:"📺 YouTube Kanal",
-latest:"Neuestes Video",
-latestDesc:"Schau meinen Kanal!",
-collab:"Kooperationen 🤝",
-collabDesc:"Willst du zusammenarbeiten?",
-footer:"© 2026 MatiXM"
-},
-es:{
-title:"🔥 Comunidad MatiXM 🔥",
-tagline:"YouTube • Discord • Gaming • Comunidad",
-discord:"💬 Unirse a Discord",
-yt:"📺 Canal de YouTube",
-latest:"Último video",
-latestDesc:"Mira mi canal!",
-collab:"Colaboraciones 🤝",
-collabDesc:"¿Quieres colaborar?",
-footer:"© 2026 MatiXM"
-}
+
+/* JĘZYKI */
+const translations = {
+  pl: {
+    title: "🔥 Społeczność MatiXM 🔥",
+    tagline: "YouTube • Discord • Gaming • Społeczność",
+    discord: "💬 Dołącz do Discorda",
+    yt: "📺 Kanał YouTube",
+    latest: "Najnowszy film",
+    desc: "Zobacz mój kanał i dołącz do społeczności!",
+    coop: "Współprace 🤝",
+    coopDesc: "Chcesz współpracę? Twój serwer pojawi się na Discordzie.",
+    footer: "© 2026 MatiXM • Strona społeczności"
+  },
+  en: {
+    title: "🔥 MatiXM Community 🔥",
+    tagline: "YouTube • Discord • Gaming • Community",
+    discord: "💬 Join Discord",
+    yt: "📺 YouTube Channel",
+    latest: "Latest video",
+    desc: "Check out my channel and join the community!",
+    coop: "Partnerships 🤝",
+    coopDesc: "Want to collaborate? Your server will appear on our Discord.",
+    footer: "© 2026 MatiXM • Community website"
+  }
 };
 
-function setLang(lang){
-localStorage.setItem("lang", lang);
-
-document.getElementById("title").innerText=t[lang].title;
-document.getElementById("tagline").innerText=t[lang].tagline;
-document.getElementById("discordBtn").innerText=t[lang].discord;
-document.getElementById("ytBtn").innerText=t[lang].yt;
-document.getElementById("latest").innerText=t[lang].latest;
-document.getElementById("latestDesc").innerText=t[lang].latestDesc;
-document.getElementById("collab").innerText=t[lang].collab;
-document.getElementById("collabDesc").innerText=t[lang].collabDesc;
-document.getElementById("footer").innerText=t[lang].footer;
+function setLang(lang) {
+  document.getElementById("title").innerText = translations[lang].title;
+  document.getElementById("tagline").innerText = translations[lang].tagline;
+  document.getElementById("discordBtn").innerText = translations[lang].discord;
+  document.getElementById("ytBtn").innerText = translations[lang].yt;
+  document.getElementById("latest").innerText = translations[lang].latest;
+  document.getElementById("desc").innerText = translations[lang].desc;
+  document.getElementById("coop").innerText = translations[lang].coop;
+  document.getElementById("coopDesc").innerText = translations[lang].coopDesc;
+  document.getElementById("footer").innerText = translations[lang].footer;
 }
 
-function toggleLang(){
-let menu=document.getElementById("langMenu");
-menu.style.display = menu.style.display==="block"?"none":"block";
+/* MOTYW */
+function setTheme(theme) {
+  document.body.className = theme;
 }
 
-// load saved language
-window.onload=()=>{
-let lang=localStorage.getItem("lang") || "pl";
-setLang(lang);
-};
-
-// close menu when clicking outside
-document.addEventListener("click",(e)=>{
-if(!e.target.closest(".lang-box")){
-document.getElementById("langMenu").style.display="none";
-}
-});
 </script>
 
 </body>

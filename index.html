@@ -7,23 +7,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
+/* ZMIENNE I RESET */
+:root {
+  --bg1: #1a1a2e;
+  --bg2: #0f0f1a;
+  --main: #ff00cc;
+  --second: #6a5cff;
+  --glass: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Poppins', sans-serif;
   color: #fff;
   background: radial-gradient(circle at top, var(--bg1), var(--bg2));
-  transition: 0.4s;
+  background-attachment: fixed;
+  min-height: 100vh;
+  transition: 0.5s ease;
+  overflow-x: hidden;
 }
 
 /* MOTYWY */
-:root {
-  --bg1:#1a1a2e;
-  --bg2:#0f0f1a;
-  --main:#ff00cc;
-  --second:#6a5cff;
-}
-
 .theme-blue { --main:#00c6ff; --second:#0072ff; }
 .theme-green { --main:#00ff88; --second:#00c853; }
 .theme-red { --main:#ff3b3b; --second:#ff0000; }
@@ -31,47 +37,51 @@ body {
 /* TOPBAR */
 .topbar {
   position: fixed;
+  top: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 15px 25px;
-  z-index: 999;
+  padding: 15px 5%;
+  z-index: 1000;
+  background: rgba(15, 15, 26, 0.7);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border);
 }
+
+.nav-group { display: flex; gap: 10px; }
 
 /* DROPDOWN */
-.dropdown {
-  position: relative;
-}
+.dropdown { position: relative; }
 
 .dropbtn {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
+  background: var(--glass);
+  border: 1px solid var(--border);
   color: white;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border-radius: 12px;
   cursor: pointer;
   transition: 0.3s;
+  font-weight: 500;
 }
 
-.dropbtn:hover {
-  background: rgba(255,255,255,0.15);
-}
+.dropbtn:hover { background: rgba(255,255,255,0.15); border-color: var(--main); }
 
 .dropdown-content {
   position: absolute;
-  top: 45px;
-  background: rgba(0,0,0,0.9);
+  top: calc(100% + 10px);
+  right: 0;
+  background: rgba(10, 10, 20, 0.95);
+  border: 1px solid var(--border);
   border-radius: 14px;
-  overflow: hidden;
   min-width: 160px;
   display: none;
-  animation: fadeIn 0.2s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  overflow: hidden;
 }
 
 .dropdown-content button {
   width: 100%;
-  padding: 12px;
+  padding: 12px 20px;
   background: none;
   border: none;
   color: white;
@@ -80,73 +90,108 @@ body {
   transition: 0.2s;
 }
 
-.dropdown-content button:hover {
-  background: rgba(255,255,255,0.1);
-}
+.dropdown-content button:hover { background: var(--main); }
+.show { display: block; animation: slideIn 0.3s ease; }
 
-.show { display: block; }
-
-@keyframes fadeIn {
-  from {opacity:0; transform:translateY(-10px);}
-  to {opacity:1; transform:translateY(0);}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* CONTENT */
 .container {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: auto;
-  padding: 100px 20px 60px;
+  padding: 120px 20px 60px;
   text-align: center;
+  animation: fadeInPage 1s ease;
+}
+
+@keyframes fadeInPage {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
-  font-size: 56px;
-  margin-bottom: 10px;
+  font-size: clamp(32px, 8vw, 60px);
+  margin-bottom: 15px;
   background: linear-gradient(90deg, var(--main), var(--second));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
 }
 
-.tagline { margin-bottom: 50px; }
+.tagline { margin-bottom: 50px; font-size: 1.1rem; opacity: 0.9; }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 20px;
   flex-wrap: wrap;
+  margin-bottom: 40px;
 }
 
 .btn {
-  padding: 16px 30px;
-  border-radius: 14px;
+  padding: 16px 35px;
+  border-radius: 50px;
   text-decoration: none;
-  font-weight: 600;
-  background: linear-gradient(45deg,var(--main),var(--second));
+  font-weight: 700;
+  background: linear-gradient(45deg, var(--main), var(--second));
   color: white;
-  transition: 0.3s;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
-.btn:hover { transform: scale(1.08); }
+.btn:hover { 
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 15px 30px rgba(var(--main), 0.4);
+}
 
 .card {
-  margin-top: 50px;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
+  margin-top: 30px;
+  padding: 40px;
+  border-radius: 24px;
+  background: var(--glass);
+  border: 1px solid var(--border);
   backdrop-filter: blur(12px);
+  transition: 0.4s;
 }
 
-.youtube iframe {
+.card:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--main);
+  transform: translateY(-5px);
+}
+
+.youtube-wrapper {
+  position: relative;
   width: 100%;
-  max-width: 800px;
-  height: 450px;
-  border-radius: 16px;
-  margin-top: 30px;
+  max-width: 850px;
+  margin: 40px auto;
+  aspect-ratio: 16/9;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  border: 2px solid var(--border);
+}
+
+.youtube-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  border: none;
 }
 
 footer {
-  margin-top: 60px;
-  opacity: 0.7;
+  margin-top: 80px;
+  padding-bottom: 40px;
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+
+/* MOBILE FIX */
+@media (max-width: 600px) {
+  .topbar { padding: 10px 15px; }
+  .dropbtn { padding: 8px 12px; font-size: 14px; }
 }
 </style>
 </head>
@@ -154,114 +199,119 @@ footer {
 <body>
 
 <div class="topbar">
+  <div style="font-weight: 700; background: linear-gradient(var(--main), var(--second)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MXM</div>
+  <div class="nav-group">
+    <!-- JĘZYK -->
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleMenu('langMenu')">🌐 <span id="langLabel">Język</span></button>
+      <div class="dropdown-content" id="langMenu">
+        <button onclick="setLang('pl')">🇵🇱 Polski</button>
+        <button onclick="setLang('en')">🇬🇧 English</button>
+      </div>
+    </div>
 
-  <!-- JĘZYK -->
-  <div class="dropdown">
-    <button class="dropbtn" onclick="toggleMenu('langMenu')">🌐 Język</button>
-    <div class="dropdown-content" id="langMenu">
-      <button onclick="setLang('pl')">🇵🇱 Polski</button>
-      <button onclick="setLang('en')">🇬🇧 English</button>
+    <!-- KOLOR -->
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleMenu('themeMenu')">🎨 <span id="themeLabel">Styl</span></button>
+      <div class="dropdown-content" id="themeMenu">
+        <button onclick="setTheme('')">💜 Domyślny</button>
+        <button onclick="setTheme('theme-blue')">💙 Niebieski</button>
+        <button onclick="setTheme('theme-green')">💚 Zielony</button>
+        <button onclick="setTheme('theme-red')">❤️ Czerwony</button>
+      </div>
     </div>
   </div>
-
-  <!-- KOLOR -->
-  <div class="dropdown">
-    <button class="dropbtn" onclick="toggleMenu('themeMenu')">🎨 Kolor</button>
-    <div class="dropdown-content" id="themeMenu">
-      <button onclick="setTheme('')">💜 Domyślny</button>
-      <button onclick="setTheme('theme-blue')">💙 Niebieski</button>
-      <button onclick="setTheme('theme-green')">💚 Zielony</button>
-      <button onclick="setTheme('theme-red')">❤️ Czerwony</button>
-    </div>
-  </div>
-
 </div>
 
 <div class="container">
+  <h1 id="title">🔥 Społeczność MatiXM 🔥</h1>
+  <p class="tagline" id="tagline">YouTube • Discord • Gaming • Społeczność</p>
 
-<h1 id="title">🔥 Społeczność MatiXM 🔥</h1>
-<p class="tagline" id="tagline">YouTube • Discord • Gaming • Społeczność</p>
+  <div class="buttons">
+    <a class="btn" id="discordBtn" href="#">💬 Dołącz do Discorda</a>
+    <a class="btn" id="ytBtn" href="#">📺 Kanał YouTube</a>
+  </div>
 
-<div class="buttons">
-  <a class="btn" id="discordBtn" href="#">💬 Dołącz do Discorda</a>
-  <a class="btn" id="ytBtn" href="#">📺 Kanał YouTube</a>
-</div>
+  <div class="card">
+    <h2 id="latest" style="margin-bottom:10px">Najnowszy film</h2>
+    <p id="desc">Zobacz mój kanał i dołącz do naszej rosnącej społeczności!</p>
+  </div>
 
-<div class="card">
-  <h2 id="latest">Najnowszy film</h2>
-  <p id="desc">Zobacz mój kanał i dołącz do społeczności!</p>
-</div>
+  <div class="youtube-wrapper">
+    <!-- UWAGA: Tutaj wpisz ID swojego kanału po list=... -->
+    <iframe src="https://www.youtube.com"></iframe>
+  </div>
 
-<div class="youtube">
-  <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=MatiXM-123"></iframe>
-</div>
+  <div class="card">
+    <h2 id="coop" style="margin-bottom:10px">Współprace 🤝</h2>
+    <p id="coopDesc">Masz pomysł na projekt? Twój serwer może pojawić się w sekcji partnerów.</p>
+  </div>
 
-<div class="card">
-  <h2 id="coop">Współprace 🤝</h2>
-  <p id="coopDesc">Chcesz współpracę? Twój serwer pojawi się na Discordzie.</p>
-</div>
-
-<footer id="footer">
-© 2026 MatiXM • Strona społeczności
-</footer>
-
+  <footer id="footer">
+    © 2026 MatiXM • Zaprojektowano z pasją
+  </footer>
 </div>
 
 <script>
-
-/* DROPDOWN */
+/* MENU LOGIC */
 function toggleMenu(id) {
-  document.querySelectorAll(".dropdown-content").forEach(el => {
-    if (el.id !== id) el.classList.remove("show");
-  });
-  document.getElementById(id).classList.toggle("show");
+  const menu = document.getElementById(id);
+  const isOpen = menu.classList.contains("show");
+  
+  document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
+  if (!isOpen) menu.classList.add("show");
 }
 
-document.addEventListener("click", function(e) {
+window.onclick = function(e) {
   if (!e.target.closest(".dropdown")) {
-    document.querySelectorAll(".dropdown-content").forEach(el => {
-      el.classList.remove("show");
-    });
+    document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
   }
-});
+}
 
-/* JĘZYKI */
-const t = {
+/* LANGUAGES */
+const translations = {
   pl: {
-    title:"🔥 Społeczność MatiXM 🔥",
-    tagline:"YouTube • Discord • Gaming • Społeczność",
-    discord:"💬 Dołącz do Discorda",
-    yt:"📺 Kanał YouTube",
-    latest:"Najnowszy film",
-    desc:"Zobacz mój kanał i dołącz do społeczności!",
-    coop:"Współprace 🤝",
-    coopDesc:"Chcesz współpracę? Twój serwer pojawi się na Discordzie.",
-    footer:"© 2026 MatiXM • Strona społeczności"
+    title: "🔥 Społeczność MatiXM 🔥",
+    tagline: "YouTube • Discord • Gaming • Społeczność",
+    discordBtn: "💬 Dołącz do Discorda",
+    ytBtn: "📺 Kanał YouTube",
+    latest: "Najnowszy film",
+    desc: "Zobacz mój kanał i dołącz do naszej rosnącej społeczności!",
+    coop: "Współprace 🤝",
+    coopDesc: "Masz pomysł na projekt? Twój serwer może pojawić się w sekcji partnerów.",
+    footer: "© 2026 MatiXM • Zaprojektowano z pasją",
+    langLabel: "Język",
+    themeLabel: "Styl"
   },
   en: {
-    title:"🔥 MatiXM Community 🔥",
-    tagline:"YouTube • Discord • Gaming • Community",
-    discord:"💬 Join Discord",
-    yt:"📺 YouTube Channel",
-    latest:"Latest video",
-    desc:"Check out my channel and join the community!",
-    coop:"Partnerships 🤝",
-    coopDesc:"Want to collaborate? Your server will appear on our Discord.",
-    footer:"© 2026 MatiXM • Community website"
+    title: "🔥 MatiXM Community 🔥",
+    tagline: "YouTube • Discord • Gaming • Community",
+    discordBtn: "💬 Join Discord",
+    ytBtn: "📺 YouTube Channel",
+    latest: "Latest Video",
+    desc: "Check out my channel and join our growing community!",
+    coop: "Partnerships 🤝",
+    coopDesc: "Have a project idea? Your server can appear in our partners section.",
+    footer: "© 2026 MatiXM • Designed with passion",
+    langLabel: "Language",
+    themeLabel: "Theme"
   }
 };
 
-function setLang(l){
-  for(let key in t[l]){
-    document.getElementById(key).innerText = t[l][key];
+function setLang(lang) {
+  const t = translations[lang];
+  for (let id in t) {
+    const el = document.getElementById(id);
+    if (el) el.innerText = t[id];
   }
+  document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
 }
 
-/* MOTYW */
-function setTheme(theme){
+/* THEMES */
+function setTheme(theme) {
   document.body.className = theme;
+  document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
 }
-
 </script>
 
 </body>

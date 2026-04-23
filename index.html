@@ -6,6 +6,7 @@
 <title>MatiXM Community</title>
 <link href="https://googleapis.com" rel="stylesheet">
 <style>
+/* ZMIENNE I MOTYWY */
 :root {
   --bg1: #1a1a2e; --bg2: #0f0f1a;
   --main: #ff00cc; --second: #6a5cff;
@@ -22,35 +23,36 @@ body {
   background-attachment: fixed;
   min-height: 100vh;
   transition: 0.5s ease;
+  overflow-x: hidden;
 }
 
-/* MOTYWY */
+/* MOTYWY KOLORYSTYCZNE */
+.theme-yellow { --main:#ffd700; --second:#ff8c00; }
 .theme-blue { --main:#00c6ff; --second:#0072ff; }
 .theme-green { --main:#00ff88; --second:#00c853; }
-.theme-red { --main:#ff3b3b; --second:#ff0000; }
-.theme-yellow { --main:#ffd700; --second:#ff8c00; }
 
 /* TOPBAR */
 .topbar {
   position: fixed; top: 0; width: 100%;
   display: flex; justify-content: space-between; align-items: center;
   padding: 15px 5%; z-index: 1000;
-  background: rgba(15, 15, 26, 0.8);
+  background: rgba(15, 15, 26, 0.85);
   backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
 }
 
-.nav-group { display: flex; gap: 10px; z-index: 1001; }
+.nav-group { display: flex; gap: 10px; }
 
 /* DROPDOWN */
 .dropdown { position: relative; }
 .dropbtn {
   background: var(--glass); border: 1px solid var(--border);
   color: white; padding: 10px 18px; border-radius: 12px;
-  cursor: pointer; font-weight: 500;
+  cursor: pointer; transition: 0.3s;
 }
+.dropbtn:hover { border-color: var(--main); background: rgba(255,255,255,0.1); }
 
 .dropdown-content {
-  position: absolute; top: 50px; right: 0;
+  position: absolute; top: 55px; right: 0;
   background: #111; border: 1px solid var(--border);
   border-radius: 14px; min-width: 160px; display: none;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -59,82 +61,89 @@ body {
   width: 100%; padding: 12px; background: none; border: none;
   color: white; text-align: left; cursor: pointer;
 }
-.dropdown-content button:hover { background: var(--main); }
+.dropdown-content button:hover { background: var(--main); color: #000; font-weight: bold; }
 .show { display: block; }
 
-/* KONTENER I PRZYCISKI - NAPRAWA KLIKANIA */
-.container { 
-  max-width: 1000px; margin: auto; 
-  padding: 120px 20px 60px; text-align: center;
+/* CONTENT */
+.container { max-width: 900px; margin: auto; padding: 120px 20px 60px; text-align: center; }
+
+h1 { 
+  font-size: clamp(30px, 8vw, 60px); margin-bottom: 20px; 
+  background: linear-gradient(90deg, var(--main), var(--second)); 
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
 }
 
+/* PRZYCISKI - NAPRAWA KLIKANIA */
 .buttons { 
-  display: flex; justify-content: center; 
-  gap: 20px; flex-wrap: wrap; margin-bottom: 40px;
-  position: relative; z-index: 10; /* Zapewnia klikalność */
+  display: flex; justify-content: center; gap: 20px; 
+  margin-bottom: 40px; position: relative; z-index: 100; /* Musi być wysoki z-index */
 }
-
 .btn {
   padding: 16px 35px; border-radius: 50px; text-decoration: none;
-  font-weight: 700; color: white;
+  font-weight: 700; color: white; display: inline-block;
   background: linear-gradient(45deg, var(--main), var(--second));
-  transition: 0.3s ease;
-  display: inline-block;
-  cursor: pointer;
-  border: none;
+  transition: 0.3s ease; cursor: pointer; border: none;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
-.btn:hover { transform: translateY(-5px); filter: brightness(1.2); }
+.btn:hover { transform: translateY(-5px); box-shadow: 0 10px 30px var(--main); }
 
+/* KARTY */
 .card {
-  margin-top: 30px; padding: 30px; border-radius: 24px;
+  margin-top: 30px; padding: 40px; border-radius: 24px;
   background: var(--glass); border: 1px solid var(--border);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px); transition: 0.4s;
 }
 
+/* WSPÓŁPRACE */
 .coop-item { 
-  display: block; margin: 10px 0; color: var(--main); 
-  text-decoration: none; font-weight: bold; font-size: 1.2rem;
+  display: inline-block; margin-top: 15px; padding: 10px 20px;
+  color: var(--main); text-decoration: none; font-weight: bold; 
+  font-size: 1.3rem; border: 1px dashed var(--main); border-radius: 10px;
 }
+.coop-item:hover { background: var(--main); color: #000; }
 
 /* PANEL ADMINA */
 #adminPanel {
-  position: fixed; right: -350px; top: 0; width: 320px; height: 100%;
+  position: fixed; right: -360px; top: 0; width: 320px; height: 100%;
   background: #0a0a14; padding: 30px; z-index: 2000;
-  border-left: 2px solid var(--main); transition: 0.4s;
-  overflow-y: auto;
+  border-left: 3px solid var(--main); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto; box-shadow: -10px 0 50px rgba(0,0,0,0.8);
 }
 #adminPanel.active { right: 0; }
 
-input, textarea {
-  width: 100%; padding: 10px; margin: 10px 0;
-  border-radius: 8px; border: 1px solid var(--border);
-  background: rgba(255,255,255,0.05); color: white;
+.admin-input {
+  width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white;
 }
-.save-btn {
-  width: 100%; padding: 12px; background: var(--main);
-  border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 10px;
+.admin-btn {
+  width: 100%; padding: 14px; margin-top: 10px; border-radius: 10px;
+  border: none; cursor: pointer; font-weight: bold; transition: 0.2s;
 }
+.btn-save { background: var(--main); color: #000; }
+.btn-delete { background: #ff4757; color: white; margin-top: 5px; }
+
 </style>
 </head>
-<body>
+<body id="body">
 
 <div class="topbar">
-  <div style="font-weight: 700; font-size: 1.2rem;">MXM</div>
+  <div style="font-weight: 800; font-size: 1.4rem; color: var(--main);">MXM</div>
   <div class="nav-group">
     <div class="dropdown">
-      <button class="dropbtn" onclick="toggleMenu('langMenu')">🌐 <span id="langLabel">PL</span></button>
+      <button class="dropbtn" onclick="toggleMenu('langMenu')">🌐 <span id="lName">PL</span></button>
       <div class="dropdown-content" id="langMenu">
-        <button onclick="setLang('pl')">🇵🇱 Polski</button>
-        <button onclick="setLang('en')">🇬🇧 English</button>
-        <button onclick="setLang('de')">🇩🇪 Deutsch</button>
+        <button onclick="setLang('pl')">Polski</button>
+        <button onclick="setLang('en')">English</button>
+        <button onclick="setLang('de')">Deutsch</button>
       </div>
     </div>
     <div class="dropdown">
       <button class="dropbtn" onclick="toggleMenu('themeMenu')">🎨 Styl</button>
       <div class="dropdown-content" id="themeMenu">
-        <button onclick="setTheme('')">💜 Domyślny</button>
         <button onclick="setTheme('theme-yellow')">💛 Żółty</button>
         <button onclick="setTheme('theme-blue')">💙 Niebieski</button>
+        <button onclick="setTheme('theme-green')">💚 Zielony</button>
+        <button onclick="setTheme('')">💜 Domyślny</button>
       </div>
     </div>
     <button class="dropbtn" onclick="openAdmin()">🔐</button>
@@ -143,101 +152,136 @@ input, textarea {
 
 <div class="container">
   <h1 id="title">🔥 Społeczność MatiXM 🔥</h1>
-  <p style="margin-bottom: 40px;">YouTube • Discord • Gaming</p>
-  
+  <p id="tagline" style="margin-bottom: 40px; opacity: 0.7;">YouTube • Discord • Gaming • Społeczność</p>
+
   <div class="buttons">
-    <a class="btn" id="discordLink" href="https://discord.gg" target="_blank">💬 Dołącz do Discorda</a>
-    <a class="btn" id="ytLink" href="https://youtube.com" target="_blank">📺 Kanał YouTube</a>
+    <a href="https://discord.gg" class="btn" id="dBtn" target="_blank">💬 Dołącz do Discorda</a>
+    <a href="https://youtube.com" class="btn" id="yBtn" target="_blank">📺 Kanał YouTube</a>
+  </div>
+
+  <div class="card" id="ogloszenieCard" style="display:none;">
+    <h2 id="oTitle">Ogłoszenie</h2>
+    <p id="oText" style="margin-top:10px; font-size: 1.1rem;"></p>
   </div>
 
   <div class="card">
-    <h2 id="coopTitle">Współprace 🤝</h2>
+    <h2 id="cTitle">Współprace 🤝</h2>
     <div id="coopList">
-      <!-- Linki do współprac pojawią się tutaj -->
+      <p style="opacity:0.5;">Brak aktywnych współprac.</p>
     </div>
   </div>
+
+  <footer style="margin-top: 60px; opacity: 0.3; font-size: 0.8rem;">
+    © 2026 MatiXM Community
+  </footer>
 </div>
 
 <!-- PANEL ADMINA -->
 <div id="adminPanel">
-  <h3>Ustawienia Admina</h3>
-  <br>
-  <label>Link Discord:</label>
-  <input type="text" id="editDC" placeholder="https://discord.gg...">
+  <h2 style="color:var(--main)">Panel Admina</h2>
+  <hr style="margin: 15px 0; opacity: 0.1;">
   
-  <label>Link YouTube:</label>
-  <input type="text" id="editYT" placeholder="https://youtube.com...">
+  <label>Tytuł strony:</label>
+  <input type="text" id="inTitle" class="admin-input">
   
-  <hr style="margin: 20px 0; opacity: 0.2;">
-  
-  <label>Współpraca (Nazwa):</label>
-  <input type="text" id="coopName" placeholder="Np. Serwer MC">
-  <label>Współpraca (Link):</label>
-  <input type="text" id="coopUrl" placeholder="https://...">
+  <label>Tekst Ogłoszenia:</label>
+  <textarea id="inNews" class="admin-input" rows="3"></textarea>
+  <button class="admin-btn btn-delete" onclick="clearNews()">🗑️ Usuń ogłoszenie</button>
 
-  <button class="save-btn" onclick="saveAdmin()">💾 Zapisz wszystko</button>
-  <button onclick="closeAdmin()" style="margin-top:10px; background:none; border:none; color:gray; cursor:pointer;">Anuluj</button>
+  <div style="margin: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+    <label>Współpraca (Nazwa):</label>
+    <input type="text" id="inCName" class="admin-input" placeholder="Np. Serwer Survival">
+    <label>Współpraca (Link):</label>
+    <input type="text" id="inCLink" class="admin-input" placeholder="https://...">
+  </div>
+
+  <button class="admin-btn btn-save" onclick="saveData()">💾 Zapisz zmiany</button>
+  <button class="admin-btn" onclick="closeAdmin()" style="background:none; color:gray;">Zamknij</button>
 </div>
 
 <script>
 const PASS = "MatiXM05050";
 
+/* MENU */
 function toggleMenu(id) {
   document.querySelectorAll('.dropdown-content').forEach(m => m.id !== id && m.classList.remove('show'));
   document.getElementById(id).classList.toggle('show');
 }
 
-function setTheme(t) { document.body.className = t; }
-
-function setLang(lang) {
-  const translations = {
-    pl: { title: "🔥 Społeczność MatiXM 🔥", coop: "Współprace 🤝", dc: "💬 Dołącz do Discorda", yt: "📺 Kanał YouTube" },
-    en: { title: "🔥 MatiXM Community 🔥", coop: "Partnerships 🤝", dc: "💬 Join Discord", yt: "📺 YouTube Channel" },
-    de: { title: "🔥 MatiXM Gemeinschaft 🔥", coop: "Kooperationen 🤝", dc: "💬 Discord beitreten", yt: "📺 YouTube-Kanal" }
-  };
-  document.getElementById("title").innerText = translations[lang].title;
-  document.getElementById("coopTitle").innerText = translations[lang].coop;
-  document.getElementById("discordLink").innerText = translations[lang].dc;
-  document.getElementById("ytLink").innerText = translations[lang].yt;
-  document.getElementById("langLabel").innerText = lang.toUpperCase();
-}
-
-function openAdmin() {
-  if(prompt("Hasło:") === PASS) document.getElementById("adminPanel").classList.add("active");
-}
-
-function closeAdmin() { document.getElementById("adminPanel").classList.remove("active"); }
-
-function saveAdmin() {
-  const data = {
-    dc: document.getElementById("editDC").value,
-    yt: document.getElementById("editYT").value,
-    cName: document.getElementById("coopName").value,
-    cUrl: document.getElementById("coopUrl").value
-  };
-  localStorage.setItem("matiConfig", JSON.stringify(data));
-  applyData(data);
-  closeAdmin();
-}
-
-function applyData(data) {
-  if(data.dc) document.getElementById("discordLink").href = data.dc;
-  if(data.yt) document.getElementById("ytLink").href = data.yt;
-  if(data.cName && data.cUrl) {
-    document.getElementById("coopList").innerHTML = `<a href="${data.cUrl}" class="coop-item" target="_blank">🔗 ${data.cName}</a>`;
-  }
-}
-
-// Wczytywanie po starcie
-window.onload = () => {
-  const saved = JSON.parse(localStorage.getItem("matiConfig"));
-  if(saved) applyData(saved);
-};
-
-// Zamykanie menu po kliknięciu obok
 window.onclick = (e) => {
   if (!e.target.matches('.dropbtn')) {
     document.querySelectorAll('.dropdown-content').forEach(m => m.classList.remove('show'));
+  }
+};
+
+/* STYLE I JĘZYKI */
+function setTheme(t) { document.getElementById("body").className = t; }
+
+const langData = {
+  pl: { o: "Ogłoszenie", c: "Współprace 🤝", d: "💬 Dołącz do Discorda", y: "📺 Kanał YouTube" },
+  en: { o: "Announcement", c: "Partnerships 🤝", d: "💬 Join Discord", y: "📺 YouTube Channel" },
+  de: { o: "Ankündigung", c: "Kooperationen 🤝", d: "💬 Discord beitreten", y: "📺 YouTube-Kanal" }
+};
+
+function setLang(l) {
+  document.getElementById("oTitle").innerText = langData[l].o;
+  document.getElementById("cTitle").innerText = langData[l].c;
+  document.getElementById("dBtn").innerText = langData[l].d;
+  document.getElementById("yBtn").innerText = langData[l].y;
+  document.getElementById("lName").innerText = l.toUpperCase();
+}
+
+/* LOGIKA ADMINA */
+function openAdmin() {
+  if(prompt("Hasło:") === PASS) document.getElementById("adminPanel").classList.add("active");
+}
+function closeAdmin() { document.getElementById("adminPanel").classList.remove("active"); }
+
+function clearNews() {
+  document.getElementById("inNews").value = "";
+  alert("Ogłoszenie wyczyszczone. Kliknij 'Zapisz', aby zatwierdzić.");
+}
+
+function saveData() {
+  const settings = {
+    title: document.getElementById("inTitle").value,
+    news: document.getElementById("inNews").value,
+    cName: document.getElementById("inCName").value,
+    cLink: document.getElementById("inCLink").value
+  };
+  localStorage.setItem("mxm_final_v1", JSON.stringify(settings));
+  apply(settings);
+  closeAdmin();
+  alert("Zmiany zapisane!");
+}
+
+function apply(data) {
+  if(data.title) document.getElementById("title").innerText = data.title;
+  
+  // Ogłoszenie
+  const card = document.getElementById("ogloszenieCard");
+  if(data.news && data.news.trim() !== "") {
+    document.getElementById("oText").innerText = data.news;
+    card.style.display = "block";
+  } else {
+    card.style.display = "none";
+  }
+
+  // Współpraca
+  if(data.cName && data.cLink) {
+    document.getElementById("coopList").innerHTML = `<a href="${data.cLink}" class="coop-item" target="_blank">🔗 ${data.cName}</a>`;
+  }
+}
+
+// Start strony
+window.onload = () => {
+  const saved = JSON.parse(localStorage.getItem("mxm_final_v1"));
+  if(saved) {
+    apply(saved);
+    document.getElementById("inTitle").value = saved.title || "";
+    document.getElementById("inNews").value = saved.news || "";
+    document.getElementById("inCName").value = saved.cName || "";
+    document.getElementById("inCLink").value = saved.cLink || "";
   }
 };
 </script>

@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MatiXM Community</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://googleapis.com" rel="stylesheet">
 <style>
-/* ZMIENNE I RESET */
 :root {
   --bg1: #1a1a2e; --bg2: #0f0f1a;
   --main: #ff00cc; --second: #6a5cff;
@@ -23,133 +22,119 @@ body {
   background-attachment: fixed;
   min-height: 100vh;
   transition: 0.5s ease;
-  overflow-x: hidden;
 }
 
 /* MOTYWY */
 .theme-blue { --main:#00c6ff; --second:#0072ff; }
 .theme-green { --main:#00ff88; --second:#00c853; }
 .theme-red { --main:#ff3b3b; --second:#ff0000; }
-
-/* PASEK POSTĘPU */
-#scroll-bar {
-  position: fixed; top: 0; left: 0; height: 3px;
-  background: linear-gradient(to right, var(--main), var(--second));
-  z-index: 2000; width: 0%; transition: 0.1s;
-}
+.theme-yellow { --main:#ffd700; --second:#ff8c00; }
 
 /* TOPBAR */
 .topbar {
   position: fixed; top: 0; width: 100%;
   display: flex; justify-content: space-between; align-items: center;
   padding: 15px 5%; z-index: 1000;
-  background: rgba(15, 15, 26, 0.7);
+  background: rgba(15, 15, 26, 0.8);
   backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
 }
 
-.nav-group { display: flex; gap: 10px; }
+.nav-group { display: flex; gap: 10px; z-index: 1001; }
 
 /* DROPDOWN */
 .dropdown { position: relative; }
 .dropbtn {
   background: var(--glass); border: 1px solid var(--border);
   color: white; padding: 10px 18px; border-radius: 12px;
-  cursor: pointer; transition: 0.3s; font-weight: 500;
+  cursor: pointer; font-weight: 500;
 }
-.dropbtn:hover { background: rgba(255,255,255,0.15); border-color: var(--main); }
 
 .dropdown-content {
-  position: absolute; top: calc(100% + 10px); right: 0;
-  background: rgba(10, 10, 20, 0.95); border: 1px solid var(--border);
+  position: absolute; top: 50px; right: 0;
+  background: #111; border: 1px solid var(--border);
   border-radius: 14px; min-width: 160px; display: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .dropdown-content button {
-  width: 100%; padding: 12px 20px; background: none;
-  border: none; color: white; text-align: left; cursor: pointer; transition: 0.2s;
+  width: 100%; padding: 12px; background: none; border: none;
+  color: white; text-align: left; cursor: pointer;
 }
 .dropdown-content button:hover { background: var(--main); }
-.show { display: block; animation: slideIn 0.3s ease; }
+.show { display: block; }
 
-/* CONTENT */
-.container { max-width: 1000px; margin: auto; padding: 120px 20px 60px; text-align: center; }
-h1 {
-  font-size: clamp(32px, 8vw, 60px); margin-bottom: 15px;
-  background: linear-gradient(90deg, var(--main), var(--second));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+/* KONTENER I PRZYCISKI - NAPRAWA KLIKANIA */
+.container { 
+  max-width: 1000px; margin: auto; 
+  padding: 120px 20px 60px; text-align: center;
 }
-.tagline { margin-bottom: 50px; font-size: 1.1rem; opacity: 0.9; }
 
-.buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
+.buttons { 
+  display: flex; justify-content: center; 
+  gap: 20px; flex-wrap: wrap; margin-bottom: 40px;
+  position: relative; z-index: 10; /* Zapewnia klikalność */
+}
+
 .btn {
   padding: 16px 35px; border-radius: 50px; text-decoration: none;
   font-weight: 700; color: white;
   background: linear-gradient(45deg, var(--main), var(--second));
-  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  transition: 0.3s ease;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
 }
-.btn:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 15px 30px var(--main); }
+.btn:hover { transform: translateY(-5px); filter: brightness(1.2); }
 
 .card {
-  margin-top: 30px; padding: 40px; border-radius: 24px;
+  margin-top: 30px; padding: 30px; border-radius: 24px;
   background: var(--glass); border: 1px solid var(--border);
-  backdrop-filter: blur(12px); transition: 0.4s;
+  backdrop-filter: blur(10px);
 }
 
-.youtube-wrapper {
-  position: relative; width: 100%; max-width: 850px;
-  margin: 40px auto; aspect-ratio: 16/9; border-radius: 20px;
-  overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid var(--border);
+.coop-item { 
+  display: block; margin: 10px 0; color: var(--main); 
+  text-decoration: none; font-weight: bold; font-size: 1.2rem;
 }
-.youtube-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-/* 🔐 PANEL ADMINA (NOWY STYL) */
+/* PANEL ADMINA */
 #adminPanel {
   position: fixed; right: -350px; top: 0; width: 320px; height: 100%;
-  background: rgba(10, 10, 20, 0.98); backdrop-filter: blur(20px);
-  padding: 30px; z-index: 3000; border-left: 2px solid var(--main);
-  box-shadow: -10px 0 40px rgba(0,0,0,0.8); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #0a0a14; padding: 30px; z-index: 2000;
+  border-left: 2px solid var(--main); transition: 0.4s;
+  overflow-y: auto;
 }
 #adminPanel.active { right: 0; }
-.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-.admin-input-group { margin-bottom: 20px; text-align: left; }
-.admin-input-group label { display: block; font-size: 12px; text-transform: uppercase; color: var(--main); margin-bottom: 5px; font-weight: 700; }
-.admin-input-group input, .admin-input-group textarea {
-  width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-  border-radius: 10px; padding: 12px; color: white; font-family: inherit;
-}
-.admin-input-group input:focus { border-color: var(--main); outline: none; }
-.admin-save-btn {
-  width: 100%; padding: 15px; border-radius: 12px; border: none;
-  background: linear-gradient(45deg, var(--main), var(--second));
-  color: white; font-weight: 700; cursor: pointer; margin-top: 10px;
-}
 
-@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-footer { margin-top: 80px; padding-bottom: 40px; opacity: 0.5; font-size: 0.9rem; text-align: center;}
+input, textarea {
+  width: 100%; padding: 10px; margin: 10px 0;
+  border-radius: 8px; border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05); color: white;
+}
+.save-btn {
+  width: 100%; padding: 12px; background: var(--main);
+  border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 10px;
+}
 </style>
 </head>
 <body>
 
-<div id="scroll-bar"></div>
-
 <div class="topbar">
-  <div style="font-weight: 700; font-size: 1.2rem; background: linear-gradient(var(--main), var(--second)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MXM</div>
+  <div style="font-weight: 700; font-size: 1.2rem;">MXM</div>
   <div class="nav-group">
     <div class="dropdown">
-      <button class="dropbtn" onclick="toggleMenu('langMenu')">🌐 <span id="langLabel">Język</span></button>
+      <button class="dropbtn" onclick="toggleMenu('langMenu')">🌐 <span id="langLabel">PL</span></button>
       <div class="dropdown-content" id="langMenu">
         <button onclick="setLang('pl')">🇵🇱 Polski</button>
         <button onclick="setLang('en')">🇬🇧 English</button>
+        <button onclick="setLang('de')">🇩🇪 Deutsch</button>
       </div>
     </div>
     <div class="dropdown">
-      <button class="dropbtn" onclick="toggleMenu('themeMenu')">🎨 <span id="themeLabel">Styl</span></button>
+      <button class="dropbtn" onclick="toggleMenu('themeMenu')">🎨 Styl</button>
       <div class="dropdown-content" id="themeMenu">
         <button onclick="setTheme('')">💜 Domyślny</button>
+        <button onclick="setTheme('theme-yellow')">💛 Żółty</button>
         <button onclick="setTheme('theme-blue')">💙 Niebieski</button>
-        <button onclick="setTheme('theme-green')">💚 Zielony</button>
-        <button onclick="setTheme('theme-red')">❤️ Czerwony</button>
       </div>
     </div>
     <button class="dropbtn" onclick="openAdmin()">🔐</button>
@@ -158,173 +143,103 @@ footer { margin-top: 80px; padding-bottom: 40px; opacity: 0.5; font-size: 0.9rem
 
 <div class="container">
   <h1 id="title">🔥 Społeczność MatiXM 🔥</h1>
-  <p class="tagline" id="tagline">YouTube • Discord • Gaming • Społeczność</p>
+  <p style="margin-bottom: 40px;">YouTube • Discord • Gaming</p>
   
   <div class="buttons">
-    <a class="btn" id="discordBtn" href="#">💬 Dołącz do Discorda</a>
-    <a class="btn" id="ytBtn" href="#">📺 Kanał YouTube</a>
-  </div>
-
-  <div class="card" id="announcementCard" style="display:none;">
-    <h2 id="latest" style="margin-bottom:10px">Ogłoszenie</h2>
-    <p id="desc">Zaktualizuj treść w panelu administratora.</p>
-  </div>
-
-  <div class="youtube-wrapper">
-    <iframe id="mainVideo" src="https://youtube.com"></iframe>
+    <a class="btn" id="discordLink" href="https://discord.gg" target="_blank">💬 Dołącz do Discorda</a>
+    <a class="btn" id="ytLink" href="https://youtube.com" target="_blank">📺 Kanał YouTube</a>
   </div>
 
   <div class="card">
-    <h2 id="coop" style="margin-bottom:10px">Współprace 🤝</h2>
-    <p id="coopDesc">Masz pomysł na projekt? Twój serwer może pojawić się w sekcji partnerów.</p>
+    <h2 id="coopTitle">Współprace 🤝</h2>
+    <div id="coopList">
+      <!-- Linki do współprac pojawią się tutaj -->
+    </div>
   </div>
-
-  <footer id="footer"> © 2026 MatiXM • Zaprojektowano z pasją </footer>
 </div>
 
-<!-- 🔐 PANEL ADMINA -->
+<!-- PANEL ADMINA -->
 <div id="adminPanel">
-  <div class="admin-header">
-    <h3>Ustawienia MXM</h3>
-    <span style="cursor:pointer" onclick="closeAdmin()">❌</span>
-  </div>
+  <h3>Ustawienia Admina</h3>
+  <br>
+  <label>Link Discord:</label>
+  <input type="text" id="editDC" placeholder="https://discord.gg...">
+  
+  <label>Link YouTube:</label>
+  <input type="text" id="editYT" placeholder="https://youtube.com...">
+  
+  <hr style="margin: 20px 0; opacity: 0.2;">
+  
+  <label>Współpraca (Nazwa):</label>
+  <input type="text" id="coopName" placeholder="Np. Serwer MC">
+  <label>Współpraca (Link):</label>
+  <input type="text" id="coopUrl" placeholder="https://...">
 
-  <div class="admin-input-group">
-    <label>Tytuł strony (PL)</label>
-    <input type="text" id="editTitle" placeholder="Np. MatiXM Community">
-  </div>
-
-  <div class="admin-input-group">
-    <label>Ogłoszenie (Tekst)</label>
-    <textarea id="editDesc" rows="3"></textarea>
-  </div>
-
-  <div class="admin-input-group">
-    <label>Link do filmu/ID (YouTube)</label>
-    <input type="text" id="editYTLink" placeholder="Link lub ID filmu">
-  </div>
-
-  <div class="admin-input-group">
-    <label>Link Discord</label>
-    <input type="text" id="editDC">
-  </div>
-
-  <button class="admin-save-btn" onclick="saveAdmin()">💾 Zapisz zmiany</button>
+  <button class="save-btn" onclick="saveAdmin()">💾 Zapisz wszystko</button>
+  <button onclick="closeAdmin()" style="margin-top:10px; background:none; border:none; color:gray; cursor:pointer;">Anuluj</button>
 </div>
 
 <script>
-/* --- KONFIGURACJA --- */
 const PASS = "MatiXM05050";
 
-/* MENU LOGIC */
 function toggleMenu(id) {
-  const menu = document.getElementById(id);
-  const isOpen = menu.classList.contains("show");
-  document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
-  if (!isOpen) menu.classList.add("show");
+  document.querySelectorAll('.dropdown-content').forEach(m => m.id !== id && m.classList.remove('show'));
+  document.getElementById(id).classList.toggle('show');
 }
 
-window.onclick = function(e) {
-  if (!e.target.closest(".dropdown") && !e.target.closest("#adminPanel") && !e.target.matches('.dropbtn')) {
-    document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
-  }
-}
-
-/* PASEK POSTĘPU */
-window.onscroll = function() {
-  let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  let scrolled = (winScroll / height) * 100;
-  document.getElementById("scroll-bar").style.width = scrolled + "%";
-};
-
-/* LANGUAGES */
-const translations = {
-  pl: { title: "🔥 Społeczność MatiXM 🔥", tagline: "YouTube • Discord • Gaming • Społeczność", discordBtn: "💬 Dołącz do Discorda", ytBtn: "📺 Kanał YouTube", latest: "Ogłoszenie", desc: "Wiadomość od admina", coop: "Współprace 🤝", coopDesc: "Masz pomysł na projekt? Twój serwer może pojawić się w sekcji partnerów.", footer: "© 2026 MatiXM • Zaprojektowano z pasją", langLabel: "Język", themeLabel: "Styl" },
-  en: { title: "🔥 MatiXM Community 🔥", tagline: "YouTube • Discord • Gaming • Community", discordBtn: "💬 Join Discord", ytBtn: "📺 YouTube Channel", latest: "Announcement", desc: "Message from admin", coop: "Partnerships 🤝", coopDesc: "Have a project idea? Your server can appear in our partners section.", footer: "© 2026 MatiXM • Designed with passion", langLabel: "Language", themeLabel: "Theme" }
-};
-
-let currentLang = 'pl';
+function setTheme(t) { document.body.className = t; }
 
 function setLang(lang) {
-  currentLang = lang;
-  const t = translations[lang];
-  for (let id in t) {
-    const el = document.getElementById(id);
-    if (el) el.innerText = t[id];
-  }
-  document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
+  const translations = {
+    pl: { title: "🔥 Społeczność MatiXM 🔥", coop: "Współprace 🤝", dc: "💬 Dołącz do Discorda", yt: "📺 Kanał YouTube" },
+    en: { title: "🔥 MatiXM Community 🔥", coop: "Partnerships 🤝", dc: "💬 Join Discord", yt: "📺 YouTube Channel" },
+    de: { title: "🔥 MatiXM Gemeinschaft 🔥", coop: "Kooperationen 🤝", dc: "💬 Discord beitreten", yt: "📺 YouTube-Kanal" }
+  };
+  document.getElementById("title").innerText = translations[lang].title;
+  document.getElementById("coopTitle").innerText = translations[lang].coop;
+  document.getElementById("discordLink").innerText = translations[lang].dc;
+  document.getElementById("ytLink").innerText = translations[lang].yt;
+  document.getElementById("langLabel").innerText = lang.toUpperCase();
 }
 
-function setTheme(theme) {
-  document.body.className = theme;
-}
-
-/* 🔐 ADMIN LOGIC */
 function openAdmin() {
-  const p = prompt("Podaj hasło:");
-  if(p === PASS) {
-    document.getElementById("adminPanel").classList.add("active");
-    loadAdminFields();
-  } else {
-    alert("Błędne hasło!");
-  }
+  if(prompt("Hasło:") === PASS) document.getElementById("adminPanel").classList.add("active");
 }
 
-function closeAdmin() {
-  document.getElementById("adminPanel").classList.remove("active");
-}
-
-function getYTId(url) {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length == 11) ? match[2] : url;
-}
+function closeAdmin() { document.getElementById("adminPanel").classList.remove("active"); }
 
 function saveAdmin() {
   const data = {
-    title: document.getElementById("editTitle").value,
-    desc: document.getElementById("editDesc").value,
-    yt: getYTId(document.getElementById("editYTLink").value),
-    dc: document.getElementById("editDC").value
+    dc: document.getElementById("editDC").value,
+    yt: document.getElementById("editYT").value,
+    cName: document.getElementById("coopName").value,
+    cUrl: document.getElementById("coopUrl").value
   };
-  
-  localStorage.setItem("matiXM_data", JSON.stringify(data));
-  applyAdminData(data);
-  alert("Zapisano pomyślnie!");
+  localStorage.setItem("matiConfig", JSON.stringify(data));
+  applyData(data);
   closeAdmin();
 }
 
-function loadAdminFields() {
-  const data = JSON.parse(localStorage.getItem("matiXM_data")) || {};
-  document.getElementById("editTitle").value = data.title || "";
-  document.getElementById("editDesc").value = data.desc || "";
-  document.getElementById("editYTLink").value = data.yt || "";
-  document.getElementById("editDC").value = data.dc || "";
-}
-
-function applyAdminData(data) {
-  if(data.title) {
-    document.getElementById("title").innerText = data.title;
-    translations.pl.title = data.title; // Aktualizacja tłumaczenia w locie
-  }
-  if(data.desc) {
-    document.getElementById("desc").innerText = data.desc;
-    document.getElementById("announcementCard").style.display = "block";
-  }
-  if(data.yt) {
-    document.getElementById("mainVideo").src = `https://youtube.com{data.yt}`;
-  }
-  if(data.dc) {
-    document.getElementById("discordBtn").href = data.dc;
+function applyData(data) {
+  if(data.dc) document.getElementById("discordLink").href = data.dc;
+  if(data.yt) document.getElementById("ytLink").href = data.yt;
+  if(data.cName && data.cUrl) {
+    document.getElementById("coopList").innerHTML = `<a href="${data.cUrl}" class="coop-item" target="_blank">🔗 ${data.cName}</a>`;
   }
 }
 
-// Auto-load przy starcie
+// Wczytywanie po starcie
 window.onload = () => {
-  const saved = JSON.parse(localStorage.getItem("matiXM_data"));
-  if(saved) applyAdminData(saved);
-}
+  const saved = JSON.parse(localStorage.getItem("matiConfig"));
+  if(saved) applyData(saved);
+};
+
+// Zamykanie menu po kliknięciu obok
+window.onclick = (e) => {
+  if (!e.target.matches('.dropbtn')) {
+    document.querySelectorAll('.dropdown-content').forEach(m => m.classList.remove('show'));
+  }
+};
 </script>
 
 </body>

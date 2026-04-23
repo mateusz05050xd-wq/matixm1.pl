@@ -4,246 +4,213 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MatiXM Community</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-/* ZMIENNE I RESET */
 :root {
-  --bg1: #1a1a2e; --bg2: #0f0f1a;
-  --main: #ff00cc; --second: #6a5cff;
-  --glass: rgba(255, 255, 255, 0.05);
-  --border: rgba(255, 255, 255, 0.1);
+  --bg1:#1a1a2e; --bg2:#0f0f1a;
+  --main:#ff00cc; --second:#6a5cff;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Poppins', sans-serif;
-  color: #fff;
-  background: radial-gradient(circle at top, var(--bg1), var(--bg2));
-  background-attachment: fixed;
-  min-height: 100vh;
-  transition: 0.5s ease;
-  overflow-x: hidden;
+body{
+  font-family:Poppins,sans-serif;
+  margin:0;
+  color:white;
+  background:radial-gradient(circle at top,var(--bg1),var(--bg2));
 }
 
-/* MOTYWY */
-.theme-blue { --main:#00c6ff; --second:#0072ff; }
-.theme-green { --main:#00ff88; --second:#00c853; }
-.theme-red { --main:#ff3b3b; --second:#ff0000; }
-
-/* PASEK POSTĘPU */
-#scroll-bar {
-  position: fixed; top: 0; left: 0; height: 3px;
-  background: linear-gradient(to right, var(--main), var(--second));
-  z-index: 1001; width: 0%; transition: 0.1s;
+/* NAV */
+.topbar{
+  position:fixed;
+  width:100%;
+  padding:15px;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:space-between;
+  z-index:1000;
 }
 
-/* TOPBAR */
-.topbar {
-  position: fixed; top: 0; width: 100%;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 15px 5%; z-index: 1000;
-  background: rgba(15, 15, 26, 0.7);
-  backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
+.admin-link{
+  cursor:pointer;
+  color:#00ffcc;
 }
 
-.nav-group { display: flex; gap: 10px; }
-
-/* DROPDOWN */
-.dropdown { position: relative; }
-.dropbtn {
-  background: var(--glass); border: 1px solid var(--border);
-  color: white; padding: 10px 18px; border-radius: 12px;
-  cursor: pointer; transition: 0.3s; font-weight: 500;
-}
-.dropbtn:hover { background: rgba(255,255,255,0.15); border-color: var(--main); }
-
-.dropdown-content {
-  position: absolute; top: calc(100% + 10px); right: 0;
-  background: rgba(10, 10, 20, 0.95); border: 1px solid var(--border);
-  border-radius: 14px; min-width: 160px; display: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;
+/* CONTAINER */
+.container{
+  padding:120px 20px;
+  text-align:center;
 }
 
-.dropdown-content button {
-  width: 100%; padding: 12px 20px; background: none;
-  border: none; color: white; text-align: left;
-  cursor: pointer; transition: 0.2s;
-}
-.dropdown-content button:hover { background: var(--main); }
-.show { display: block; animation: slideIn 0.3s ease; }
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.btn{
+  padding:15px 30px;
+  border-radius:50px;
+  text-decoration:none;
+  color:white;
+  background:linear-gradient(45deg,var(--main),var(--second));
+  margin:10px;
+  display:inline-block;
 }
 
-/* CONTENT */
-.container {
-  max-width: 1000px; margin: auto;
-  padding: 120px 20px 60px; text-align: center;
-  animation: fadeInPage 1s ease;
+/* PANEL ADMIN */
+#adminPage{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:none;
+  z-index:9999;
+  padding:30px;
 }
 
-@keyframes fadeInPage {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+input, textarea{
+  width:100%;
+  margin-bottom:10px;
+  padding:10px;
 }
 
-h1 {
-  font-size: clamp(32px, 8vw, 60px); margin-bottom: 15px;
-  background: linear-gradient(90deg, var(--main), var(--second));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+button{
+  padding:10px;
+  width:100%;
 }
 
-.tagline { margin-bottom: 50px; font-size: 1.1rem; opacity: 0.9; }
-
-.buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
-
-.btn {
-  padding: 16px 35px; border-radius: 50px; text-decoration: none;
-  font-weight: 700; color: white;
-  background: linear-gradient(45deg, var(--main), var(--second));
-  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-.btn:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 15px 30px var(--main); }
-
-.card {
-  margin-top: 30px; padding: 40px; border-radius: 24px;
-  background: var(--glass); border: 1px solid var(--border);
-  backdrop-filter: blur(12px); transition: 0.4s;
-}
-.card:hover {
-  background: rgba(255,255,255,0.08); border-color: var(--main);
-  transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-}
-
-.youtube-wrapper {
-  position: relative; width: 100%; max-width: 850px; margin: 40px auto;
-  aspect-ratio: 16/9; border-radius: 20px; overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid var(--border);
-}
-.youtube-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-footer { margin-top: 80px; padding-bottom: 40px; opacity: 0.5; font-size: 0.9rem; }
-
-@media (max-width: 600px) {
-  .topbar { padding: 10px 15px; }
-  .dropbtn { padding: 8px 12px; font-size: 14px; }
-}
+/* stats */
+.stats{margin-top:40px;}
 </style>
 </head>
 
 <body>
-<div id="scroll-bar"></div>
 
 <div class="topbar">
-  <div style="font-weight: 700; font-size: 1.2rem; background: linear-gradient(var(--main), var(--second)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MXM</div>
-  <div class="nav-group">
-    <div class="dropdown">
-      <button class="dropbtn" onclick="toggleMenu('langMenu')">🌐 <span id="langLabel">Język</span></button>
-      <div class="dropdown-content" id="langMenu">
-        <button onclick="setLang('pl')">🇵🇱 Polski</button>
-        <button onclick="setLang('en')">🇬🇧 English</button>
-      </div>
-    </div>
-    <div class="dropdown">
-      <button class="dropbtn" onclick="toggleMenu('themeMenu')">🎨 <span id="themeLabel">Styl</span></button>
-      <div class="dropdown-content" id="themeMenu">
-        <button onclick="setTheme('')">💜 Domyślny</button>
-        <button onclick="setTheme('theme-blue')">💙 Niebieski</button>
-        <button onclick="setTheme('theme-green')">💚 Zielony</button>
-        <button onclick="setTheme('theme-red')">❤️ Czerwony</button>
-      </div>
-    </div>
-  </div>
+  <b>MXM</b>
+  <div class="admin-link" onclick="openAdmin()">⚙️ STRONA ADMIN</div>
 </div>
 
 <div class="container">
-  <h1 id="title">🔥 Społeczność MatiXM 🔥</h1>
-  <p class="tagline" id="tagline">YouTube • Discord • Gaming • Społeczność</p>
 
-  <div class="buttons">
-    <a class="btn" id="discordBtn" href="LINK_DO_DISCORDA">💬 Dołącz do Discorda</a>
-    <a class="btn" id="ytBtn" href="LINK_DO_YT">📺 Kanał YouTube</a>
-  </div>
+<h1>🔥 MatiXM Community 🔥</h1>
 
-  <div class="card">
-    <h2 id="latest" style="margin-bottom:10px">Najnowszy film</h2>
-    <p id="desc">Zobacz mój kanał i dołącz do naszej rosnącej społeczności!</p>
-  </div>
+<div>
+<a class="btn" id="dcBtn" href="https://discord.gg/CxSAnTpt" target="_blank">Discord</a>
+<a class="btn" id="ytBtn" href="https://www.youtube.com/@MatiXM-123" target="_blank">YouTube</a>
+</div>
 
-  <div class="youtube-wrapper">
-    <!-- WPISZ SWÓJ ID KANAŁU ZAMIAST MatiXM -->
-    <iframe src="https://www.youtube.com"></iframe>
-  </div>
+<div class="stats">
+<h2 id="subs">...</h2>
+<p>🔴 Subów</p>
 
-  <div class="card">
-    <h2 id="coop" style="margin-bottom:10px">Współprace 🤝</h2>
-    <p id="coopDesc">Masz pomysł na projekt? Twój serwer może pojawić się w sekcji partnerów.</p>
-  </div>
+<h2 id="online">...</h2>
+<p>👥 Online</p>
+</div>
 
-  <footer id="footer">
-    © 2026 MatiXM • Zaprojektowano z pasją
-  </footer>
+<div id="announcementBox"></div>
+
+<div style="margin-top:40px;">
+<iframe id="ytFrame" width="100%" height="400" src="https://www.youtube.com/embed?autoplay=1&mute=1"></iframe>
+</div>
+
+</div>
+
+<!-- PANEL ADMIN -->
+<div id="adminPage">
+
+<h2>🔐 Panel Admina</h2>
+
+<label>📢 Ogłoszenie</label>
+<textarea id="a1"></textarea>
+
+<label>🎬 YouTube embed link</label>
+<input id="a2">
+
+<label>💬 Discord link</label>
+<input id="a3">
+
+<button onclick="save()">💾 ZAPISZ</button>
+<button onclick="closeAdmin()">❌ Zamknij</button>
+
 </div>
 
 <script>
-/* MENU LOGIC */
-function toggleMenu(id) {
-  const menu = document.getElementById(id);
-  const isOpen = menu.classList.contains("show");
-  document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
-  if (!isOpen) menu.classList.add("show");
+
+/* ================= ADMIN ================= */
+
+function openAdmin(){
+  const pass = prompt("Hasło:");
+  if(pass !== "MatiXM05050") return alert("Złe hasło!");
+
+  document.getElementById("adminPage").style.display = "block";
+  load();
 }
 
-window.onclick = function(e) {
-  if (!e.target.closest(".dropdown")) {
-    document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
+function closeAdmin(){
+  document.getElementById("adminPage").style.display = "none";
+}
+
+function save(){
+  const data = {
+    text: document.getElementById("a1").value,
+    yt: document.getElementById("a2").value,
+    dc: document.getElementById("a3").value
+  };
+
+  localStorage.setItem("mxmAdmin", JSON.stringify(data));
+  apply(data);
+  alert("Zapisano!");
+}
+
+function load(){
+  const data = JSON.parse(localStorage.getItem("mxmAdmin")) || {};
+
+  document.getElementById("a1").value = data.text || "";
+  document.getElementById("a2").value = data.yt || "";
+  document.getElementById("a3").value = data.dc || "";
+}
+
+function apply(data){
+  if(data.text){
+    document.getElementById("announcementBox").innerText = data.text;
+  }
+
+  if(data.yt){
+    document.getElementById("ytFrame").src = data.yt;
+  }
+
+  if(data.dc){
+    document.getElementById("dcBtn").href = data.dc;
   }
 }
 
-/* PASEK POSTĘPU */
-window.onscroll = function() {
-  let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  let scrolled = (winScroll / height) * 100;
-  document.getElementById("scroll-bar").style.width = scrolled + "%";
-};
+/* AUTO LOAD */
+const saved = JSON.parse(localStorage.getItem("mxmAdmin"));
+if(saved) apply(saved);
 
-/* LANGUAGES */
-const translations = {
-  pl: {
-    title: "🔥 Społeczność MatiXM 🔥", tagline: "YouTube • Discord • Gaming • Społeczność",
-    discordBtn: "💬 Dołącz do Discorda", ytBtn: "📺 Kanał YouTube",
-    latest: "Najnowszy film", desc: "Zobacz mój kanał i dołącz do naszej rosnącej społeczności!",
-    coop: "Współprace 🤝", coopDesc: "Masz pomysł na projekt? Twój serwer może pojawić się w sekcji partnerów.",
-    footer: "© 2026 MatiXM • Zaprojektowano z pasją", langLabel: "Język", themeLabel: "Styl"
-  },
-  en: {
-    title: "🔥 MatiXM Community 🔥", tagline: "YouTube • Discord • Gaming • Community",
-    discordBtn: "💬 Join Discord", ytBtn: "📺 YouTube Channel",
-    latest: "Latest Video", desc: "Check out my channel and join our growing community!",
-    coop: "Partnerships 🤝", coopDesc: "Have a project idea? Your server can appear in our partners section.",
-    footer: "© 2026 MatiXM • Designed with passion", langLabel: "Language", themeLabel: "Theme"
+/* ================= YOUTUBE API ================= */
+
+// WSTAW SWÓJ KLUCZ
+const API_KEY = "TWOJ_API_KEY";
+const CHANNEL_ID = "UC";
+
+async function getSubs(){
+  try{
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
+    const data = await res.json();
+    const subs = data.items[0].statistics.subscriberCount;
+    document.getElementById("subs").innerText = subs;
+  }catch{
+    document.getElementById("subs").innerText = "...";
   }
-};
-
-function setLang(lang) {
-  const t = translations[lang];
-  for (let id in t) {
-    const el = document.getElementById(id);
-    if (el) el.innerText = t[id];
-  }
-  document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
 }
+getSubs();
+setInterval(getSubs,60000);
 
-function setTheme(theme) {
-  document.body.className = theme;
-  document.querySelectorAll(".dropdown-content").forEach(el => el.classList.remove("show"));
+/* ================= ONLINE ================= */
+
+function online(){
+  document.getElementById("online").innerText = Math.floor(Math.random()*20)+5;
 }
+online();
+setInterval(online,5000);
+
 </script>
+
 </body>
 </html>

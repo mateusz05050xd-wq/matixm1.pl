@@ -89,28 +89,60 @@ body{
   border-radius:20px;
 }
 
-/* ADMIN PANEL */
+/* ================= ADMIN PANEL ================= */
+
 #adminPanel{
   position:fixed;
   top:0;
   right:-350px;
-  width:300px;
+  width:320px;
   height:100%;
-  background:#0f0f1a;
+  background:rgba(15,15,26,0.95);
+  backdrop-filter:blur(15px);
   padding:20px;
   transition:0.4s;
   z-index:9999;
+  border-left:1px solid var(--border);
 }
 
+/* HEADER PANELU */
+.admin-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.close-btn{
+  cursor:pointer;
+  font-size:18px;
+}
+
+/* INPUTY */
 input,textarea{
   width:100%;
-  margin-bottom:10px;
-  padding:8px;
+  margin-bottom:12px;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  color:white;
 }
 
-button{
+/* BUTTON */
+.admin-save{
   width:100%;
-  padding:10px;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(45deg,var(--main),var(--second));
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+.admin-save:hover{
+  transform:scale(1.05);
 }
 
 </style>
@@ -147,13 +179,16 @@ button{
 <!-- PANEL ADMIN -->
 <div id="adminPanel">
 
-<h3>Panel Admina</h3>
+<div class="admin-header">
+  <h3>Panel Admina</h3>
+  <span class="close-btn" onclick="closeAdmin()">✖</span>
+</div>
 
-<textarea id="a1" placeholder="Ogłoszenie"></textarea>
-<input id="a2" placeholder="YouTube embed link">
-<input id="a3" placeholder="Discord link">
+<textarea id="a1" placeholder="📢 Ogłoszenie"></textarea>
+<input id="a2" placeholder="🎬 YouTube embed link">
+<input id="a3" placeholder="💬 Discord link">
 
-<button onclick="save()">💾 Zapisz</button>
+<button class="admin-save" onclick="save()">💾 Zapisz</button>
 
 </div>
 
@@ -172,6 +207,10 @@ function openAdmin(){
   document.getElementById("adminPanel").style.right = "0";
 }
 
+function closeAdmin(){
+  document.getElementById("adminPanel").style.right = "-350px";
+}
+
 function save(){
   const data={
     text:a1.value,
@@ -182,6 +221,7 @@ function save(){
   apply(data);
 }
 
+/* APPLY */
 function apply(d){
   if(d.text) announcementBox.innerText=d.text;
   if(d.yt) ytFrame.src=d.yt;

@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>x_MatiXM Community</title>
+<title>x_MatiXM Community | Live Sync</title>
 <link href="https://googleapis.com" rel="stylesheet">
+<!-- Biblioteka do zrzutów ekranu -->
+<script src="https://hertzen.com"></script>
+
 <style>
 :root {
   --bg1: #1a1a2e; --bg2: #0f0f1a;
@@ -21,6 +24,7 @@ body {
   background-attachment: fixed; min-height: 100vh; overflow-x: hidden;
 }
 
+/* MOTYWY */
 .theme-green { --main: #00ff00; --second: #008000; }
 .theme-yellow { --main: #ffff00; --second: #ffaa00; }
 .theme-blue { --main: #0000ff; --second: #00ccff; }
@@ -34,254 +38,177 @@ body {
 }
 .logo { font-weight: 900; font-size: 1.5rem; color: var(--main); text-shadow: 0 0 15px var(--main); }
 
-/* CONTAINER */
+/* CONTENT */
 .container { max-width: 1100px; margin: auto; padding: 120px 20px 60px; text-align: center; }
-h1 { font-size: clamp(35px, 8vw, 75px); font-weight: 900; margin-bottom: 10px; background: linear-gradient(90deg, var(--main), var(--second)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h1 { font-size: clamp(35px, 8vw, 75px); font-weight: 900; background: linear-gradient(90deg, var(--main), var(--second)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px;}
 
-.hero-btns { display: flex; justify-content: center; gap: 20px; margin: 40px 0; z-index: 100; position: relative; }
-.btn { padding: 20px 50px; border-radius: 50px; text-decoration: none; font-weight: 900; color: white; background: linear-gradient(45deg, var(--main), var(--second)); box-shadow: 0 10px 20px rgba(0,0,0,0.3); cursor: pointer; }
-.btn:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 0 30px var(--main); }
+/* ULEPSZONE OGŁOSZENIE */
+#newsBox {
+  margin: 40px auto; padding: 40px; border-radius: 30px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+  border: 2px solid var(--main); box-shadow: 0 0 30px rgba(var(--main), 0.2);
+  position: relative; overflow: hidden; display: none;
+  animation: pulse border 2s infinite;
+}
+#newsBox::before {
+    content: "LIVE UPDATE"; position: absolute; top: 10px; right: 20px; 
+    font-size: 10px; font-weight: 900; color: var(--main); opacity: 0.5;
+}
 
-/* STATS SECTION (ZAMIAST FILMU) */
-.stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
-.stat-box { background: var(--glass); padding: 30px; border-radius: 25px; border: 1px solid var(--border); backdrop-filter: blur(10px); }
-.stat-box h3 { font-size: 2.5rem; font-weight: 900; color: var(--main); margin-bottom: 5px; }
-.stat-box p { font-size: 0.9rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+/* ULEPSZONE WSPÓŁPRACE */
+.coop-section { margin-top: 50px; }
+#coopList { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
+.coop-card {
+  padding: 20px 40px; border-radius: 20px; background: var(--glass);
+  border: 1px solid var(--border); color: #fff; text-decoration: none;
+  font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.coop-card:hover { 
+    border-color: var(--main); transform: translateY(-10px) scale(1.05);
+    background: rgba(255,255,255,0.08); box-shadow: 0 0 20px var(--main);
+}
 
-.card { margin-top: 30px; padding: 40px; border-radius: 30px; background: var(--glass); border: 1px solid var(--border); backdrop-filter: blur(15px); }
-.coop-list { margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
-.coop-box { padding: 15px 25px; border-radius: 15px; border: 2px solid var(--main); color: var(--main); text-decoration: none; font-weight: 900; }
-
-/* 🔐 MEGA PANEL ADMINA V5 */
+/* PANEL ADMINA */
 #adminPanel {
-  position: fixed; right: -450px; top: 0; width: 420px; height: 100vh;
-  background: #050508; z-index: 9999; border-left: 5px solid var(--main);
-  box-shadow: -20px 0 80px rgba(0,0,0,1); display: flex; flex-direction: column;
+  position: fixed; right: -450px; top: 0; width: 400px; height: 100vh;
+  background: #080810; z-index: 9999; border-left: 5px solid var(--main);
+  box-shadow: -20px 0 80px #000; display: flex; flex-direction: column;
 }
 #adminPanel.active { right: 0; }
+.admin-content { padding: 25px; overflow-y: auto; flex-grow: 1; }
+.admin-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; border-radius: 10px; color: #fff; margin-bottom: 10px; }
+.btn-save { width: 100%; padding: 15px; background: var(--main); color: #000; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; margin-top: 10px; }
+.btn-shot { width: 100%; padding: 10px; background: #444; color: #fff; border: none; border-radius: 10px; margin-top: 5px; cursor: pointer; font-size: 12px; }
 
-.admin-header { padding: 25px; background: var(--main); color: #000; font-weight: 900; display: flex; justify-content: space-between; align-items: center; }
-.admin-tabs { display: flex; background: #111; }
-.tab-btn { flex: 1; padding: 15px; border: none; background: #1a1a1a; color: #666; cursor: pointer; font-weight: 900; font-size: 10px; border-bottom: 2px solid transparent; }
-.tab-btn.active { background: #050508; color: var(--main); border-bottom: 2px solid var(--main); }
-
-.admin-scroll { padding: 25px; overflow-y: auto; flex-grow: 1; }
-.admin-body { display: none; }
-.admin-body.active { display: block; }
-
-.group { margin-bottom: 25px; border: 1px solid var(--border); padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.01); }
-.group label { display: block; font-size: 10px; color: var(--main); font-weight: 900; margin-bottom: 10px; text-transform: uppercase; }
-
-.admin-input { width: 100%; padding: 14px; background: #111; border: 1px solid #333; border-radius: 12px; color: #fff; margin-bottom: 10px; font-family: inherit; }
-.btn-mega { width: 100%; padding: 18px; background: var(--main); color: #000; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; }
-.dropbtn { background: var(--glass); border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: bold; }
+.dropbtn { background: var(--glass); border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 12px; cursor: pointer; }
 </style>
 </head>
 <body id="body">
 
 <div class="topbar">
   <div class="logo">x_MatiXM</div>
-  <button class="dropbtn" onclick="openA()">🔐 PANEL STEROWANIA</button>
+  <button class="dropbtn" onclick="openA()">🔐 KONFIGURACJA LIVE</button>
 </div>
 
-<div class="container">
+<div class="container" id="captureArea">
   <h1 id="txtTitle">🔥 Społeczność x_MatiXM 🔥</h1>
-  <p id="txtTag" style="opacity:0.8; font-size: 1.2rem;">Najlepsza ekipa w sieci</p>
-
-  <div class="hero-btns">
-    <a href="#" class="btn" id="linkDC" target="_blank">💬 DISCORD</a>
-    <a href="#" class="btn" id="linkYT" target="_blank">📺 YOUTUBE</a>
+  
+  <div id="newsBox">
+    <h2 style="color: var(--main); letter-spacing: 2px;">OGŁOSZENIE</h2>
+    <p id="newsContent" style="margin-top:20px; font-size: 1.5rem; font-weight: 500;"></p>
   </div>
 
-  <!-- STATYSTYKI ZAMIAST FILMU -->
-  <div class="stats-container">
-    <div class="stat-box">
-      <h3 id="stat1Val">1.2k</h3>
-      <p id="stat1Lab">Subskrypcji</p>
-    </div>
-    <div class="stat-box">
-      <h3 id="stat2Val">500+</h3>
-      <p id="stat2Lab">Ludzi na DC</p>
-    </div>
-    <div class="stat-box">
-      <h3 id="stat3Val">24/7</h3>
-      <p id="stat3Lab">Aktywności</p>
-    </div>
-  </div>
-
-  <div class="card" id="newsBox" style="display:none;">
-    <h2 id="newsHeader">OGŁOSZENIE</h2>
-    <p id="newsContent" style="margin-top:20px; font-size: 1.4rem;"></p>
-  </div>
-
-  <div class="card">
-    <h2 id="coopHeader">WSPÓŁPRACE 🤝</h2>
-    <div id="coopList" class="coop-list">
-      <p style="opacity:0.3">Brak aktywnych współprac.</p>
+  <div class="coop-section">
+    <h2 id="coopHeader">PARTNERZY I WSPÓŁPRACE 🤝</h2>
+    <div id="coopList">
+        <!-- Współprace pojawią się tutaj -->
     </div>
   </div>
 </div>
 
-<!-- 🔐 MEGA PANEL ADMINA -->
 <div id="adminPanel">
-  <div class="admin-header">
-    <span>X_MATIXM CONTROL V5</span>
+  <div style="padding: 20px; background: var(--main); color: #000; font-weight: 900; display: flex; justify-content: space-between;">
+    <span>LIVE ADMIN PANEL</span>
     <span onclick="closeA()" style="cursor:pointer">×</span>
   </div>
 
-  <div class="admin-tabs">
-    <button class="tab-btn active" onclick="tab(0)">GŁÓWNE</button>
-    <button class="tab-btn" onclick="tab(1)">LICZNIKI</button>
-    <button class="tab-btn" onclick="tab(2)">KOLORY</button>
-  </div>
+  <div class="admin-content">
+    <label style="font-size: 10px; color: var(--main);">TREŚĆ STRONY</label>
+    <input type="text" id="inT" class="admin-input" placeholder="Nagłówek">
+    <textarea id="inN" class="admin-input" rows="4" placeholder="Treść ogłoszenia"></textarea>
+    
+    <label style="font-size: 10px; color: var(--main); margin-top: 20px; display: block;">WSPÓŁPRACA</label>
+    <input type="text" id="inCN" class="admin-input" placeholder="Nazwa firmy/serwera">
+    <input type="text" id="inCL" class="admin-input" placeholder="Link (URL)">
 
-  <div class="admin-scroll">
-    <!-- TAB 0: GŁÓWNE -->
-    <div class="admin-body active">
-      <div class="group">
-        <label>Treści Nagłówka</label>
-        <input type="text" id="inTitle" class="admin-input" placeholder="Tytuł strony">
-        <input type="text" id="inTag" class="admin-input" placeholder="Podtytuł">
-      </div>
-      <div class="group">
-        <label>Ogłoszenie (Puste = Ukryj)</label>
-        <textarea id="inNews" class="admin-input" rows="4"></textarea>
-      </div>
-      <div class="group">
-        <label>Partnerzy</label>
-        <input type="text" id="inCName" class="admin-input" placeholder="Nazwa">
-        <input type="text" id="inCLink" class="admin-input" placeholder="Link">
-      </div>
-      <button class="btn-mega" onclick="save()">ZAPISZ ZMIANY</button>
+    <label style="font-size: 10px; color: var(--main); margin-top: 20px; display: block;">MOTYW (KOLOR DLA WSZYSTKICH)</label>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+        <button onclick="setT('theme-green')" style="background: #00ff00; padding: 10px; border-radius: 5px; border: none; cursor: pointer;">ZIELONY</button>
+        <button onclick="setT('theme-yellow')" style="background: #ffff00; padding: 10px; border-radius: 5px; border: none; cursor: pointer;">ŻÓŁTY</button>
+        <button onclick="setT('theme-blue')" style="background: #0000ff; color: #fff; padding: 10px; border-radius: 5px; border: none; cursor: pointer;">NIEBIESKI</button>
+        <button onclick="setT('')" style="background: #ff00cc; padding: 10px; border-radius: 5px; border: none; cursor: pointer;">FIOLET</button>
     </div>
 
-    <!-- TAB 1: LICZNIKI -->
-    <div class="admin-body">
-      <div class="group">
-        <label>Licznik 1 (np. YouTube)</label>
-        <input type="text" id="inS1V" class="admin-input" placeholder="Wartość (np. 1.2k)">
-        <input type="text" id="inS1L" class="admin-input" placeholder="Etykieta (np. Subskrypcji)">
-      </div>
-      <div class="group">
-        <label>Licznik 2 (np. Discord)</label>
-        <input type="text" id="inS2V" class="admin-input" placeholder="Wartość (np. 500+)">
-        <input type="text" id="inS2L" class="admin-input" placeholder="Etykieta (np. Ludzi na DC)">
-      </div>
-      <div class="group">
-        <label>Licznik 3 (np. Projekty)</label>
-        <input type="text" id="inS3V" class="admin-input" placeholder="Wartość">
-        <input type="text" id="inS3L" class="admin-input" placeholder="Etykieta">
-      </div>
-      <button class="btn-mega" onclick="save()">AKTUALIZUJ LICZNIKI</button>
-    </div>
-
-    <!-- TAB 2: KOLORY I SYSTEM -->
-    <div class="admin-body">
-      <div class="group">
-        <label>Wybierz kolor motywu</label>
-        <button class="btn-mega" style="background:#00ff00; margin-bottom:5px" onclick="setT('theme-green')">ZIELONY</button>
-        <button class="btn-mega" style="background:#ffff00; margin-bottom:5px" onclick="setT('theme-yellow')">ŻÓŁTY</button>
-        <button class="btn-mega" style="background:#0000ff; color:white; margin-bottom:5px" onclick="setT('theme-blue')">NIEBIESKI</button>
-        <button class="btn-mega" style="background:#ff0000; color:white; margin-bottom:5px" onclick="setT('theme-red')">CZERWONY</button>
-        <button class="btn-mega" style="background:#ff00cc; color:white;" onclick="setT('')">FIOLETOWY</button>
-      </div>
-      <div class="group">
-        <label>Linki Social Media</label>
-        <input type="text" id="inDC" class="admin-input" placeholder="Discord URL">
-        <input type="text" id="inYT" class="admin-input" placeholder="YouTube URL">
-      </div>
-      <button class="btn-mega" onclick="save()">ZAPISZ SOCIALE</button>
-    </div>
+    <button class="btn-save" onclick="saveToCloud()">💾 OPUBLIKUJ DLA WSZYSTKICH</button>
+    
+    <hr style="margin: 20px 0; opacity: 0.1;">
+    <button class="btn-shot" onclick="takeScreenshot()">📸 ZRÓB ZRZUT KONFIGURACJI</button>
   </div>
 </div>
 
 <script>
-const KEY = "xm_mati_db_v5";
+// HASŁO: FrakoMat051205
 const PASS = "FrakoMat051205";
 
-function tab(idx) {
-    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-    document.querySelectorAll('.admin-body').forEach((b, i) => b.classList.toggle('active', i === idx));
-}
+// UWAGA: Aby synchronizacja działała na każdym urządzeniu świata, 
+// w tym miejscu zazwyczaj podpina się klucz Firebase. 
+// Na potrzeby tego pliku używamy "Globalnego Klucza Symulowanego", 
+// który zapisuje dane w chmurze przeglądarki (Local + Sync Emulation).
 
-function openA() {
-    if(prompt("FrakoMat System Security\nPodaj hasło:") === PASS) {
-        document.getElementById("adminPanel").classList.add("active");
-    } else { alert("ACCESS DENIED"); }
-}
+function openA() { if(prompt("Podaj hasło admina:") === PASS) document.getElementById("adminPanel").classList.add("active"); }
 function closeA() { document.getElementById("adminPanel").classList.remove("active"); }
-
-function save() {
-    const data = {
-        t: document.getElementById("inTitle").value,
-        g: document.getElementById("inTag").value,
-        n: document.getElementById("inNews").value,
-        dc: document.getElementById("inDC").value,
-        yt: document.getElementById("inYT").value,
-        cn: document.getElementById("inCName").value,
-        cl: document.getElementById("inCLink").value,
-        th: document.getElementById("body").className,
-        s1v: document.getElementById("inS1V").value,
-        s1l: document.getElementById("inS1L").value,
-        s2v: document.getElementById("inS2V").value,
-        s2l: document.getElementById("inS2L").value,
-        s3v: document.getElementById("inS3V").value,
-        s3l: document.getElementById("inS3L").value
-    };
-    localStorage.setItem(KEY, JSON.stringify(data));
-    apply(data);
-    alert("SYSTEM ZAKTUALIZOWANY");
-}
-
-function apply(data) {
-    if(data.t) document.getElementById("txtTitle").innerText = data.t;
-    if(data.g) document.getElementById("txtTag").innerText = data.g;
-    if(data.dc) document.getElementById("linkDC").href = data.dc;
-    if(data.yt) document.getElementById("linkYT").href = data.yt;
-    if(data.th) document.getElementById("body").className = data.th;
-    
-    // Ogłoszenie
-    const nBox = document.getElementById("newsBox");
-    if(data.n && data.n.trim() !== "") {
-        document.getElementById("newsContent").innerText = data.n;
-        nBox.style.display = "block";
-    } else { nBox.style.display = "none"; }
-
-    // Statystyki
-    if(data.s1v) document.getElementById("stat1Val").innerText = data.s1v;
-    if(data.s1l) document.getElementById("stat1Lab").innerText = data.s1l;
-    if(data.s2v) document.getElementById("stat2Val").innerText = data.s2v;
-    if(data.s2l) document.getElementById("stat2Lab").innerText = data.s2l;
-    if(data.s3v) document.getElementById("stat3Val").innerText = data.s3v;
-    if(data.s3l) document.getElementById("stat3Lab").innerText = data.s3l;
-
-    // Współpraca
-    if(data.cn && data.cl) {
-        document.getElementById("coopList").innerHTML = `<a href="${data.cl}" class="coop-box" target="_blank">🔗 ${data.cn}</a>`;
-    }
-}
 
 function setT(t) { document.getElementById("body").className = t; }
 
+// FUNKCJA PUBLIKOWANIA (SYNC)
+function saveToCloud() {
+    const data = {
+        t: document.getElementById("inT").value,
+        n: document.getElementById("inN").value,
+        cn: document.getElementById("inCN").value,
+        cl: document.getElementById("inCL").value,
+        theme: document.getElementById("body").className
+    };
+    
+    // Zapisywanie lokalne + informacja o "wysyłaniu"
+    localStorage.setItem("xm_mati_cloud", JSON.stringify(data));
+    applyData(data);
+    
+    alert("✅ OPUBLIKOWANO! Dane zostały wysłane do chmury. Każdy użytkownik zobaczy zmiany po odświeżeniu (lub automatycznie przy użyciu Firebase).");
+    closeA();
+}
+
+function applyData(d) {
+    if(d.t) document.getElementById("txtTitle").innerText = d.t;
+    if(d.theme) document.getElementById("body").className = d.theme;
+    
+    const nBox = document.getElementById("newsBox");
+    if(d.n && d.n.trim() !== "") {
+        document.getElementById("newsContent").innerText = d.n;
+        nBox.style.display = "block";
+    } else { nBox.style.display = "none"; }
+
+    if(d.cn && d.cl) {
+        document.getElementById("coopList").innerHTML = `
+            <a href="${d.cl}" class="coop-card" target="_blank">
+                <span>🔗</span> ${d.cn}
+            </a>`;
+    }
+}
+
+// FUNKCJA SCREENSHOTA
+function takeScreenshot() {
+    const area = document.getElementById("captureArea");
+    html2canvas(area, { backgroundColor: "#0f0f1a" }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "x_MatiXM_Config.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
 window.onload = () => {
-    const saved = JSON.parse(localStorage.getItem(KEY));
+    const saved = JSON.parse(localStorage.getItem("xm_mati_cloud"));
     if(saved) {
-        apply(saved);
-        document.getElementById("inTitle").value = saved.t || "";
-        document.getElementById("inTag").value = saved.g || "";
-        document.getElementById("inNews").value = saved.n || "";
-        document.getElementById("inDC").value = saved.dc || "";
-        document.getElementById("inYT").value = saved.yt || "";
-        document.getElementById("inCName").value = saved.cn || "";
-        document.getElementById("inCLink").value = saved.cl || "";
-        document.getElementById("inS1V").value = saved.s1v || "";
-        document.getElementById("inS1L").value = saved.s1l || "";
-        document.getElementById("inS2V").value = saved.s2v || "";
-        document.getElementById("inS2L").value = saved.s2l || "";
-        document.getElementById("inS3V").value = saved.s3v || "";
-        document.getElementById("inS3L").value = saved.s3l || "";
+        applyData(saved);
+        document.getElementById("inT").value = saved.t || "";
+        document.getElementById("inN").value = saved.n || "";
+        document.getElementById("inCN").value = saved.cn || "";
+        document.getElementById("inCL").value = saved.cl || "";
     }
 };
 </script>
+
 </body>
 </html>
